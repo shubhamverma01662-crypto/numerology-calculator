@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>अपने नाम का भाग्य जानें</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom right, #4c51bf, #667eea);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #4a5568;
+        }
+        .container {
+            max-width: 48rem;
+            width: 100%;
+            padding: 1rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            text-align: center;
+        }
+        input {
+            border: 2px solid #e2e8f0;
+            border-radius: 9999px;
+            padding: 0.75rem 1.5rem;
+            width: 100%;
+            transition: all 0.3s ease-in-out;
+            text-align: center;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.5);
+        }
+        .calculate-btn {
+            background-color: #4c51bf;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .result-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .result-section.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .ad-container {
+            background-color: #e2e8f0;
+            border-radius: 1rem;
+            padding: 1rem;
+            height: 150px; /* Placeholder for ad */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a5568;
+            font-weight: bold;
+            text-align: center;
+            border: 2px dashed #a0aec0;
+        }
+        .numerology-info {
+            background-color: #f7fafc;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        footer {
+            margin-top: 4rem;
+            background: #4c51bf;
+            color: white;
+            padding: 2rem;
+            border-radius: 1.5rem 1.5rem 0 0;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease-in-out;
+        }
+        footer a:hover {
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div class="container mx-auto">
+        <div class="card mx-auto">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-indigo-700 mb-4">🔮 अपने नाम का भाग्य जानें</h1>
+            <p class="text-gray-600 mb-8 text-lg sm:text-xl">अपना पूरा नाम दर्ज करें और जानें कि अंक ज्योतिष (Numerology) के अनुसार आपका भाग्यशाली अंक क्या है।</p>
+            
+            <div class="mb-6 flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <input type="text" id="nameInput" placeholder="अपना पूरा नाम यहाँ लिखें..." class="flex-1">
+                <button id="calculateBtn" class="calculate-btn">मेरा अंक जानें</button>
+            </div>
+
+            <div id="result-section" class="result-section mt-8">
+                <p id="luckyNumber" class="text-3xl sm:text-5xl font-bold text-indigo-800 mb-2"></p>
+                <p id="numberDescription" class="text-gray-700 text-base sm:text-lg leading-relaxed"></p>
+            </div>
+
+            <!-- AdSense Ad Placeholder -->
+            <div class="ad-container mt-8">
+                Google AdSense विज्ञापन यहाँ दिखाई देंगे।
+            </div>
+            <!-- End of AdSense Ad Placeholder -->
+
+            <div id="numerology-info-container" class="numerology-info mt-8 hidden">
+                <h2 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-4">Numerology के अनुसार आपके अंक का अर्थ</h2>
+                <div id="numerology-info-content" class="text-left text-gray-700"></div>
+            </div>
+        </div>
+
+        <!-- About Us Section -->
+        <div id="about" class="card mx-auto mt-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-4">हमारे बारे में</h2>
+            <p class="text-gray-600 leading-relaxed">हमारी वेबसाइट आपका भाग्यशाली अंक जानने में मदद करने के लिए बनाई गई है। हमारा लक्ष्य है कि आप अपने नाम और अंक ज्योतिष के बीच के गहरे संबंध को समझ सकें। हम मानते हैं कि अंक हमारे जीवन में महत्वपूर्ण भूमिका निभाते हैं।</p>
+        </div>
+
+        <!-- Contact Us Section -->
+        <div id="contact" class="card mx-auto mt-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-4">हमसे संपर्क करें</h2>
+            <p class="text-gray-600 leading-relaxed">अगर आपके कोई सवाल या सुझाव हैं, तो आप हमें <a href="mailto:your-email@example.com" class="text-indigo-600 hover:text-indigo-800 font-bold">your-email@example.com</a> पर ईमेल भेज सकते हैं। हम आपसे जल्द से जल्द संपर्क करेंगे।</p>
+        </div>
+        
+        <!-- Privacy Policy Section -->
+        <div id="privacy" class="card mx-auto mt-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-indigo-700 mb-4">गोपनीयता नीति (Privacy Policy)</h2>
+            <p class="text-gray-600 leading-relaxed">हम आपकी गोपनीयता का सम्मान करते हैं। यह वेबसाइट केवल आपके द्वारा दिए गए नाम का उपयोग करके अंक ज्योतिष की गणना करती है। हम कोई भी व्यक्तिगत जानकारी स्टोर नहीं करते हैं। हमारी वेबसाइट Google AdSense और Google Analytics का उपयोग करती है। Google इन सेवाओं के लिए कुछ डेटा इकट्ठा कर सकता है। अधिक जानकारी के लिए, कृपया Google की गोपनीयता नीतियों को देखें।</p>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full text-center">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8">
+            <a href="#about" class="hover:underline">हमारे बारे में</a>
+            <a href="#contact" class="hover:underline">संपर्क करें</a>
+            <a href="#privacy" class="hover:underline">गोपनीयता नीति</a>
+        </div>
+        <p class="text-sm mt-4 opacity-75">&copy; 2024. सर्वाधिकार सुरक्षित (All Rights Reserved).</p>
+    </footer>
+
+    <script>
+        // Number values for each letter according to Chaldean Numerology
+        const numerologyChart = {
+            'A': 1, 'I': 1, 'J': 1, 'Q': 1, 'Y': 1,
+            'B': 2, 'K': 2, 'R': 2,
+            'C': 3, 'G': 3, 'L': 3, 'S': 3,
+            'D': 4, 'M': 4, 'T': 4,
+            'E': 5, 'H': 5, 'N': 5, 'X': 5,
+            'U': 6, 'V': 6, 'W': 6,
+            'O': 7, 'Z': 7,
+            'F': 8, 'P': 8
+        };
+
+        // Detailed descriptions for each single-digit number
+        const numberDescriptions = {
+            1: {
+                title: "अंक 1: नेतृत्व और नई शुरुआत",
+                description: "यह अंक सूर्य से जुड़ा है और नेतृत्व (leadership), आत्मनिर्भरता (independence) और रचनात्मकता (creativity) का प्रतीक है। अंक 1 वाले लोग साहसी होते हैं और नई शुरुआत करने से नहीं डरते। आपमें सफल होने की प्रबल इच्छा है और आप अपने काम में बहुत मेहनती होते हैं।",
+                strengths: "ताक़त: नेतृत्व क्षमता, साहस, आत्मविश्वास",
+                weaknesses: "कमज़ोरियाँ: अहंकार, ज़िद्दीपन, अधीरता"
+            },
+            2: {
+                title: "अंक 2: सहयोग और संतुलन",
+                description: "यह अंक चंद्रमा से जुड़ा है और सहयोग (cooperation), संतुलन (balance) और शांति का प्रतीक है। आप दूसरों के साथ मिलकर काम करने में माहिर हैं और आपके पास लोगों की भावनाओं को समझने की अद्भुत क्षमता है। आप दयालु और अच्छे दोस्त होते हैं।",
+                strengths: "ताक़त: दयालुता, संवेदनशीलता, कूटनीति",
+                weaknesses: "कमज़ोरियाँ: झिझक, निर्णय लेने में दिक्कत, दूसरों पर निर्भरता"
+            },
+            3: {
+                title: "अंक 3: रचनात्मकता और संचार",
+                description: "यह अंक बृहस्पति से जुड़ा है और रचनात्मकता (creativity), संचार (communication) और सामाजिकता (social) का प्रतीक है। आप अपनी भावनाओं को व्यक्त करने में कुशल हैं और आपकी कल्पना बहुत तेज़ होती है। आप हमेशा सकारात्मक और आशावादी रहते हैं।",
+                strengths: "ताक़त: कलात्मक, आशावादी, मिलनसार",
+                weaknesses: "कमज़ोरियाँ: अव्यवस्थित, ध्यान भटकना, कभी-कभी दिखावटी"
+            },
+            4: {
+                title: "अंक 4: स्थिरता और मेहनत",
+                description: "यह अंक राहु से जुड़ा है और स्थिरता (stability), मेहनत (hard work) और व्यवस्था (order) का प्रतीक है। आप एक ठोस नींव बनाने में विश्वास रखते हैं और आप बहुत विश्वसनीय होते हैं। आप हर काम को योजनाबद्ध तरीक़े से करना पसंद करते हैं।",
+                strengths: "ताक़त: विश्वसनीय, व्यावहारिक, अनुशासित",
+                weaknesses: "कमज़ोरियाँ: ज़िद्दी, लचीलेपन की कमी, रूढ़िवादी"
+            },
+            5: {
+                title: "अंक 5: स्वतंत्रता और रोमांच",
+                description: "यह अंक बुध से जुड़ा है और स्वतंत्रता (freedom), रोमांच (adventure) और परिवर्तन (change) का प्रतीक है। आप नई चीज़ें सीखने और अनुभव करने के लिए हमेशा तैयार रहते हैं। आप तेज़ दिमाग वाले और बहुमुखी प्रतिभा के धनी होते हैं।",
+                strengths: "ताक़त: बहुमुखी, अनुकूलनशील, जिज्ञासु",
+                weaknesses: "कमज़ोरियाँ: अधीर, बेचैन, प्रतिबद्धता से बचना"
+            },
+            6: {
+                title: "अंक 6: प्रेम और जिम्मेदारी",
+                description: "यह अंक शुक्र से जुड़ा है और प्रेम, परिवार और जिम्मेदारी (responsibility) का प्रतीक है। आप दूसरों की मदद करने और उन्हें सहारा देने में ख़ुशी महसूस करते हैं। आप बहुत ही स्नेही और सामंजस्यपूर्ण स्वभाव के होते हैं।",
+                strengths: "ताक़त: देखभाल करने वाले, ज़िम्मेदार, सामंजस्यपूर्ण",
+                weaknesses: "कमज़ोरियाँ: दूसरों के मामलों में ज़्यादा दखल देना, आत्म-बलिदान"
+            },
+            7: {
+                title: "अंक 7: ज्ञान और चिंतन",
+                description: "यह अंक केतु से जुड़ा है और ज्ञान (wisdom), आध्यात्मिकता (spiritual) और चिंतन (introspection) का प्रतीक है। आप हर चीज़ की गहराई में जाना पसंद करते हैं और आप एक अच्छे विचारक होते हैं। आप अकेले समय बिताना पसंद करते हैं।",
+                strengths: "ताक़त: विश्लेषणात्मक, बुद्धिमान, आध्यात्मिक",
+                weaknesses: "कमज़ोरियाँ: एकाकी, आलोचनात्मक, संदेहवादी"
+            },
+            8: {
+                title: "अंक 8: शक्ति और सफलता",
+                description: "यह अंक शनि से जुड़ा है और शक्ति (power), सफलता (success) और धन-संपत्ति (wealth) का प्रतीक है। आपमें बड़ा सोचने और उसे हासिल करने की क्षमता है। आप बहुत ही महत्वाकांक्षी और मेहनती होते हैं।",
+                strengths: "ताक़त: महत्वाकांक्षी, दृढ़, शक्तिशाली",
+                weaknesses: "कमज़ोरियाँ: लालची, ज़िद्दी, नियंत्रण करने की प्रवृत्ति"
+            },
+            9: {
+                title: "अंक 9: करुणा और मानवता",
+                description: "यह अंक मंगल से जुड़ा है और करुणा (compassion), पूर्णता (completion) और मानवता (humanity) का प्रतीक है। आप एक दयालु और आदर्शवादी व्यक्ति हैं। आप दुनिया को एक बेहतर जगह बनाना चाहते हैं।",
+                strengths: "ताक़त: निस्वार्थ, दयालु, उदार",
+                weaknesses: "कमज़ोरियाँ: भावनात्मक, आत्म-दया, आसानी से आहत होना"
+            }
+        };
+
+        const numerologyInfoHTML = Object.values(numberDescriptions).map(info => `
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-indigo-600 mb-2">${info.title}</h3>
+                <p class="mb-1">${info.description}</p>
+                <p class="mb-1"><strong>${info.strengths}</strong></p>
+                <p><strong>${info.weaknesses}</strong></p>
+            </div>
+        `).join('');
+
+        const nameInput = document.getElementById('nameInput');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resultSection = document.getElementById('result-section');
+        const luckyNumberText = document.getElementById('luckyNumber');
+        const numberDescriptionText = document.getElementById('numberDescription');
+        const numerologyInfoContainer = document.getElementById('numerology-info-container');
+        const numerologyInfoContent = document.getElementById('numerology-info-content');
+
+        function calculateNumber(name) {
+            let total = 0;
+            const cleanedName = name.toUpperCase().replace(/\s/g, '');
+            for (let i = 0; i < cleanedName.length; i++) {
+                const char = cleanedName[i];
+                if (numerologyChart[char]) {
+                    total += numerologyChart[char];
+                }
+            }
+
+            while (total > 9) {
+                total = total.toString().split('').reduce((sum, digit) => sum + parseInt(digit), 0);
+            }
+            return total;
+        }
+
+        calculateBtn.addEventListener('click', () => {
+            const name = nameInput.value;
+            if (name.trim() === '') {
+                luckyNumberText.textContent = "⚠";
+                numberDescriptionText.textContent = "कृपया अपना नाम दर्ज करें।";
+                resultSection.classList.add('show');
+                numerologyInfoContainer.classList.add('hidden');
+                return;
+            }
+
+            const luckyNum = calculateNumber(name);
+            const description = numberDescriptions[luckyNum]?.description || "इस अंक के लिए कोई विवरण नहीं है।";
+
+            luckyNumberText.textContent = `आपका भाग्यशाली अंक है: ${luckyNum}`;
+            numberDescriptionText.textContent = description;
+            resultSection.classList.add('show');
+            numerologyInfoContainer.classList.remove('hidden');
+
+            setTimeout(() => {
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            numerologyInfoContent.innerHTML = numerologyInfoHTML;
+        });
+    </script>
+</body>
+</html>
